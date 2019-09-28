@@ -113,14 +113,19 @@ var UIController = (function(){
 
                 //Add color to row
                 var rowColor;
+                var rowID;
                 if(isMathGrade){
                     rowColor = '#FAD7A0';
+                    rowID = 1;
                 }else if(isScienceGrade){
                     rowColor = '#A9DFBF';
+                    rowID = 2;
                 }else if(isHistoryGrade){
                     rowColor = '#AED6F1'
+                    rowID = 3;
                 }else{
                     rowColor = 'none'
+                    rowID = 4;
                 }
 
                 //Get letter grade and if it's an "F" change color to red
@@ -144,13 +149,17 @@ var UIController = (function(){
 
                 var uiRow = `<tr style="background-color:${rowColor};"><td>` + UIController.titleCase(userInputSubject) + '</td><td>' + userInputAssignment + '</td><td>' + userInputScore + '</td>' + letterGrade + '<td><p class="delete__btn" style="cursor:pointer; margin-left: auto; padding-right: 1em; width: 2em;">X</p></td></tr>';
 
-                var newRow = new UIController.GradeRow(userInputSubject.toLowerCase(), uiRow);
+                var newRow = new UIController.GradeRow(userInputSubject.toLowerCase(), uiRow, rowColor, rowID);
                 newDOMLines.push(newRow);
-                newDOMLines.sort((a, b) => (a.subject > b.subject) ? 1 : -1)
+                newDOMLines.sort((a, b) => (a.id > b.id) ? 1 : -1);
+                (function test(){
+                    console.log(rowColor);
+                })();
 
                 for(const cur of newDOMLines){
                     mainContainer.innerHTML += cur.UI;
                 }
+                console.log(newDOMLines)
                 
                 //Clear contents of form and refocus
                 UIController.formReset();
@@ -274,9 +283,11 @@ var UIController = (function(){
                 DOMavg.innerHTML = '-';
             }
         },
-        GradeRow: function(subject, UI){
+        GradeRow: function(subject, UI, color, id){
             this.subject = subject;
             this.UI = UI;
+            this.color = color;
+            this.id = id;
         },
         getDOMstrings: function(){
             return DOMstrings;
@@ -295,13 +306,13 @@ var UIController = (function(){
     }   
 })();
 
-var dataController = (function(){
+// var dataController = (function(){
 
-})();
+// })();
 
-var controller = (function(){
-    var setupEventListeners = function() {
-        var DOM = UICtrl.getDOMstrings();
-        console.log(DOM);
-    }
-})();
+// var controller = (function(){
+//     var setupEventListeners = function() {
+//         var DOM = UICtrl.getDOMstrings();
+//         console.log(DOM);
+//     }
+// })();
