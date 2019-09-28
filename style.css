@@ -1,0 +1,110 @@
+/* CSS Reset */
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Arial;
+  }
+  
+  body {
+    margin: 5px;
+  }
+  
+  form {
+    max-width: 400px;
+    margin: 2rem 0 0 5%;
+  }
+  
+  h1 {
+    text-align: center;
+  }
+  
+  form label {
+    display: inline-block;
+    width: 150px;
+    clear: left;
+  }
+  
+  form input {
+    width: 150px;
+    margin-bottom: 5px;
+  }
+  
+  form input[type="submit"] {
+    margin-left: 155px;
+  }
+  
+  table {
+    width: 90%;
+    background-color: #EEE;
+    margin: 2rem auto 5rem;
+    border-collapse: collapse;
+  }
+  
+  thead {
+    background-color: #333;
+    color: white;
+  }
+  
+  tr {
+    border-bottom: 1px solid black;
+  }
+  
+  th, td {
+    text-align: center;
+    padding: .5rem 0;
+    width:10em;
+  }
+
+  h3 {
+    text-align: center;
+  }
+
+  /* added code */
+  .gpa-container{
+    margin-top: 1em;
+    margin-left: 52px;
+  }
+
+  .gpa-header{
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    align-items: center;
+    width: 10em;
+  }
+
+  .gpa-percentage{
+    margin-left:auto;
+  }
+
+  .subjectList{
+    font-size: 12px;
+    margin-bottom: 1em;
+  }
+
+  /* Form validation styes */
+
+  /* .inputField:valid{
+    border: black 1px solid;
+  } */
+
+  /* .inputField:invalid{
+    border: red 1px solid;
+  } */
+
+  /* form .error {
+    font-size: 12px;
+    color: #ff0000;
+  }
+  #subject-error.error{
+    display:block;
+    margin-left: 13em;
+  }
+  #assignment-error.error{
+    display:block;
+    margin-left: 13em;
+  }
+  #score-error.error{
+    display:block;
+    margin-left: 13em;
+  } */

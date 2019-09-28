@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Grade Book</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
+</head>
+<body>
+
+    <h1>Grade book for %Insert Your Name Here%</h1>
+    <h3 id="average">GPA: <span id="gpa">-</span></h3>
+
+    <form id="mainForm" action="" name="mainForm">
+        <h2>Grades</h2>
+        <label for="subject">Subject:</label>
+        <input id="subject" class="inputField" type="text" name="subject" required data-value-missing="Required" autofocus>
+        
+        <label for="assignment">Assignment:</label>
+        <input id="assignment" class="inputField" type="text" name="assignment" required>
+        
+        <label for="score">Score:</label>
+        <input id="score" class="inputField" type="number" name="score">
+            
+        <input type="submit" value="Submit" id="submit" onclick="return UIController.addRow()">
+    </form>
+
+    <!-- new markup -->
+    <div class="gpa-container">
+        <h3 class="gpa-header">Math:
+            <p id="gpa-math" class="gpa-percentage">-</p>
+            <p class="letterGrade"></p>
+        </h3>
+
+        <p class="subjectList">(Algebra, Statistics, Calculus, Geometry)</p>
+
+        <h3 class="gpa-header">Science:
+            <p id="gpa-science" class="gpa-percentage">-</p>
+            <p class="letterGrade"></p>
+        </h3>
+
+        <p class="subjectList">(Physics, Chemistry, Biology, Astronomy)</p>
+
+        <h3 class="gpa-header">History:
+            <p id="gpa-history" class="gpa-percentage">-</p>
+            <p class="letterGrade"></p>
+        </h3>
+
+        <p class="subjectList">(American, World)</p>
+        
+    </div>
+    <!---------------->
+
+    <table>
+        <thead>
+            <tr>
+                <th>Subject</th>
+                <th>Assignment</th>
+                <th>Score</th>
+                <th>Grade</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id='container'>
+        </tbody>
+    </table>
+
+    <script src="https://cdn.jsdelivr.net/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
+    <!-- <script src="form-validation.js"></script> -->
+    <script src="script.js"></script>
+    
+
+</body>
+</html>
