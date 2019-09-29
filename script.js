@@ -182,7 +182,21 @@ var UIController = (function(){
             //Get data from delete row
             var DOMscore = parseInt(this.parentNode.parentNode.children[2].innerHTML);
             var arr = this.parentNode.parentNode.firstChild.innerHTML.toLowerCase();
-            var newArr = eval(arr + 'Grades');
+            var newArr;
+
+            var isMathGrade = mathSubjects.includes(arr.toLowerCase());
+            var isScienceGrade = scienceSubjects.includes(arr.toLowerCase());
+            var isHistoryGrade = historySubjects.includes(arr.toLowerCase());
+
+            if(isMathGrade){
+                newArr = mathGrades;
+            }else if(isScienceGrade){
+                newArr = scienceGrades;
+            }else if(isHistoryGrade){
+                newArr = historyGrades;
+            }else{
+                console.log('Delete row function isnt working');
+            }
 
             //Find the removed markup in the array and remove it
             for(i=0; i<newArr.length; i++){
@@ -202,8 +216,6 @@ var UIController = (function(){
             });
 
             newDOMLines.splice(objectIndex,1);
-
-            console.log(newDOMLines);
             
             UIController.calcGrade(mathGrades, scienceGrades, historyGrades);
         },
@@ -317,14 +329,3 @@ var UIController = (function(){
 
     }   
 })();
-
-// var dataController = (function(){
-
-// })();
-
-// var controller = (function(){
-//     var setupEventListeners = function() {
-//         var DOM = UICtrl.getDOMstrings();
-//         console.log(DOM);
-//     }
-// })();
