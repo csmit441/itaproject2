@@ -69,8 +69,6 @@ var UIController = (function(){
     //Array for HTML lines added
     var newDOMLines = [];
 
-    var lineID = 0;
-
     return{
         addRow: function(){
             event.preventDefault();
@@ -120,19 +118,15 @@ var UIController = (function(){
                 if(isMathGrade){
                     rowColor = '#FAD7A0';
                     rowColorID = 1;
-                    lineID += 1;
                 }else if(isScienceGrade){
                     rowColor = '#A9DFBF';
                     rowColorID = 2;
-                    lineID += 1;
                 }else if(isHistoryGrade){
                     rowColor = '#AED6F1'
                     rowColorID = 3;
-                    lineID += 1;
                 }else{
                     rowColor = 'none'
                     rowColorID = 4;
-                    lineID += 1;
                 }
 
                 //Get letter grade and if it's an "F" change color to red
@@ -156,14 +150,14 @@ var UIController = (function(){
 
                 var uiRow = `<tr style="background-color:${rowColor};"><td>` + UIController.titleCase(userInputSubject) + '</td><td>' + userInputAssignment + '</td><td>' + userInputScore + '</td>' + letterGrade + '<td><p class="delete__btn" style="cursor:pointer; margin-left: auto; padding-right: 1em; width: 2em;">X</p></td></tr>';
 
-                var newRow = new UIController.GradeRow(userInputSubject.toLowerCase(), uiRow, rowColor, rowColorID, lineID);
+                var newRow = new UIController.GradeRow(userInputSubject.toLowerCase(), uiRow, rowColor, rowColorID, userInputAssignment);
                 newDOMLines.push(newRow);
                 newDOMLines.sort((a, b) => (a.rowColorID > b.rowColorID) ? 1 : -1);
 
                 for(const cur of newDOMLines){
                     mainContainer.innerHTML += cur.UI;
                 }
-                console.log(newDOMLines)
+                console.log(newDOMLines);
                 
                 //Clear contents of form and refocus
                 UIController.formReset();
@@ -198,7 +192,18 @@ var UIController = (function(){
                 }
             }
             //Remove line from newDOMLines
-            console.log(this.parentNode);
+            var objectSubject = this.parentNode.parentNode.children[0].innerHTML.toLowerCase();
+            var objectAssignment = this.parentNode.parentNode.children[1].innerHTML;
+            
+            var objectIndex = newDOMLines.findIndex(function(element){
+                
+                return element.subject === objectSubject && element.lineAssignmentName === objectAssignment;
+                
+            });
+
+            newDOMLines.splice(objectIndex,1);
+
+            console.log(newDOMLines);
             
             UIController.calcGrade(mathGrades, scienceGrades, historyGrades);
         },
@@ -289,12 +294,12 @@ var UIController = (function(){
                 DOMavg.innerHTML = '-';
             }
         },
-        GradeRow: function(subject, UI, color, rowColorID, lineID){
+        GradeRow: function(subject, UI, color, rowColorID, lineAssignmentName){
             this.subject = subject;
             this.UI = UI;
             this.color = color;
             this.rowColorID = rowColorID;
-            this.lineID = lineID;
+            this.lineAssignmentName = lineAssignmentName;
         },
         getDOMstrings: function(){
             return DOMstrings;
