@@ -57,7 +57,7 @@ var UIController = (function(){
 
     //Adding name to the gradebook
     var studentNamePlaceholder = document.querySelector(DOMstrings.name);
-    //var nameInput = prompt('Please enter your full name');
+    // var nameInput = prompt('Please enter your full name');
     var studentName = studentNamePlaceholder.innerHTML.replace('%Insert Your Name Here%', 'Chris');
     studentNamePlaceholder.innerHTML = studentName;
 
@@ -68,6 +68,8 @@ var UIController = (function(){
 
     //Array for HTML lines added
     var newDOMLines = [];
+
+    var lineID = 0;
 
     return{
         addRow: function(){
@@ -111,21 +113,26 @@ var UIController = (function(){
                     console.log('array.push is not working');
                 }
 
-                //Add color to row
+                //Add row properties
                 var rowColor;
-                var rowID;
+                var rowColorID;
+
                 if(isMathGrade){
                     rowColor = '#FAD7A0';
-                    rowID = 1;
+                    rowColorID = 1;
+                    lineID += 1;
                 }else if(isScienceGrade){
                     rowColor = '#A9DFBF';
-                    rowID = 2;
+                    rowColorID = 2;
+                    lineID += 1;
                 }else if(isHistoryGrade){
                     rowColor = '#AED6F1'
-                    rowID = 3;
+                    rowColorID = 3;
+                    lineID += 1;
                 }else{
                     rowColor = 'none'
-                    rowID = 4;
+                    rowColorID = 4;
+                    lineID += 1;
                 }
 
                 //Get letter grade and if it's an "F" change color to red
@@ -149,12 +156,9 @@ var UIController = (function(){
 
                 var uiRow = `<tr style="background-color:${rowColor};"><td>` + UIController.titleCase(userInputSubject) + '</td><td>' + userInputAssignment + '</td><td>' + userInputScore + '</td>' + letterGrade + '<td><p class="delete__btn" style="cursor:pointer; margin-left: auto; padding-right: 1em; width: 2em;">X</p></td></tr>';
 
-                var newRow = new UIController.GradeRow(userInputSubject.toLowerCase(), uiRow, rowColor, rowID);
+                var newRow = new UIController.GradeRow(userInputSubject.toLowerCase(), uiRow, rowColor, rowColorID, lineID);
                 newDOMLines.push(newRow);
-                newDOMLines.sort((a, b) => (a.id > b.id) ? 1 : -1);
-                (function test(){
-                    console.log(rowColor);
-                })();
+                newDOMLines.sort((a, b) => (a.rowColorID > b.rowColorID) ? 1 : -1);
 
                 for(const cur of newDOMLines){
                     mainContainer.innerHTML += cur.UI;
@@ -186,13 +190,15 @@ var UIController = (function(){
             var arr = this.parentNode.parentNode.firstChild.innerHTML.toLowerCase();
             var newArr = eval(arr + 'Grades');
 
-            //Find the removed markup in the array and remove it from array
+            //Find the removed markup in the array and remove it
             for(i=0; i<newArr.length; i++){
                 if(newArr[i] === DOMscore){
                     newArr.splice(newArr.indexOf(newArr[i]),1);
                     break;
                 }
             }
+            //Remove line from newDOMLines
+            console.log(this.parentNode);
             
             UIController.calcGrade(mathGrades, scienceGrades, historyGrades);
         },
@@ -283,11 +289,12 @@ var UIController = (function(){
                 DOMavg.innerHTML = '-';
             }
         },
-        GradeRow: function(subject, UI, color, id){
+        GradeRow: function(subject, UI, color, rowColorID, lineID){
             this.subject = subject;
             this.UI = UI;
             this.color = color;
-            this.id = id;
+            this.rowColorID = rowColorID;
+            this.lineID = lineID;
         },
         getDOMstrings: function(){
             return DOMstrings;
