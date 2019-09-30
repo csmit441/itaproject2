@@ -1,4 +1,4 @@
-/* 
+/*
 Final Project: Create a grade book program without removing or modifying the HTML or CSS provided.
 Requirements: 
     - You must be able to add an assignment that will be displayed in the container grid.
@@ -35,7 +35,7 @@ function updateHTML(val, id = 'container') {
 
 var deleteButtonList;
 
-//UI CONTROLLER
+//MAIN CONTROLLER
 var UIController = (function(){
     
     //DOM elements
@@ -57,15 +57,14 @@ var UIController = (function(){
 
     //Adding name to the gradebook
     var studentNamePlaceholder = document.querySelector(DOMstrings.name);
-    // var nameInput = prompt('Please enter your full name');
-    var studentName = studentNamePlaceholder.innerHTML.replace('%Insert Your Name Here%', 'Chris');
+    var nameInput = prompt('Please enter your full name');
+    var studentName = studentNamePlaceholder.innerHTML.replace('%Insert Your Name Here%', nameInput);
     studentNamePlaceholder.innerHTML = studentName;
 
     //Grade data
     var mathGrades = [];
     var scienceGrades = [];
     var historyGrades = [];
-    let gpaPoints = [];
 
     //Array for HTML lines added
     var newDOMLines = [];
@@ -164,8 +163,8 @@ var UIController = (function(){
 
                 //Delete button setup
                 deleteButtonList = document.querySelectorAll(DOMstrings.deleteBtns);
-                for(i=0; i<deleteButtonList.length; i++){
-                    deleteButtonList[i].addEventListener('click', UIController.deleteRow);
+                for(const cur of deleteButtonList){
+                    cur.addEventListener('click', UIController.deleteRow);
                 }
 
                 UIController.calcGrade(mathGrades, scienceGrades, historyGrades);
@@ -199,9 +198,9 @@ var UIController = (function(){
             }
 
             //Find the removed markup in the array and remove it
-            for(i=0; i<newArr.length; i++){
-                if(newArr[i] === DOMscore){
-                    newArr.splice(newArr.indexOf(newArr[i]),1);
+            for(const cur of newArr){
+                if(cur === DOMscore){
+                    newArr.splice(newArr.indexOf(cur),1);
                     break;
                 }
             }
@@ -228,8 +227,8 @@ var UIController = (function(){
             //1. Math grade
             if(mathGrades.length != 0){
                 var mathSum = 0;
-                for(i=0; i<mathScores.length; i++){
-                    mathSum += mathScores[i];
+                for(const cur of mathScores){
+                    mathSum += cur;
                 }
                 var mathAvg = parseInt(mathSum / mathGrades.length).toFixed(2);
                 var mathPercent = mathAvg + '%';
@@ -241,8 +240,8 @@ var UIController = (function(){
             //2. Science grade
             if(scienceGrades.length != 0){    
                 var scienceSum = 0;
-                for(i=0; i<scienceScores.length; i++){
-                    scienceSum += scienceScores[i];
+                for(const cur of scienceScores){
+                    scienceSum += cur;
                 }
                 var scienceAvg = parseInt(scienceSum / scienceGrades.length).toFixed(2);
                 var sciencePercent = scienceAvg + '%';
@@ -254,8 +253,8 @@ var UIController = (function(){
             //3. History grade
             if(historyGrades.length != 0){
                 var historySum = 0;
-                for(i=0; i<historyScores.length; i++){
-                    historySum += historyScores[i];
+                for(const cur of historyScores){
+                    historySum += cur;
                 }
                 var historyAvg = parseInt(historySum / historyGrades.length).toFixed(2);
                 var historyPercent = historyAvg + '%';
@@ -291,8 +290,6 @@ var UIController = (function(){
             //Calculate the average of the gpa points
             const add = (a, b) => a + b;
             const sum = gpaPoints.reduce(add, 0);
-
-            console.log(sum);
 
             let gpa = (sum / gpaPoints.length).toFixed(2);
             let DOMavg = getElement(DOMstrings.gpa);
