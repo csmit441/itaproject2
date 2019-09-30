@@ -65,6 +65,7 @@ var UIController = (function(){
     var mathGrades = [];
     var scienceGrades = [];
     var historyGrades = [];
+    let gpaPoints = [];
 
     //Array for HTML lines added
     var newDOMLines = [];
@@ -76,7 +77,7 @@ var UIController = (function(){
             //subjects
             mathSubjects = ["math", "algebra", "statistics", "calculus", "geometry"];
             scienceSubjects = ["science", "physics", "chemistry", "biology", "astronomy"];
-            historySubjects = ["history", "american", "world"];
+            historySubjects = ["history", "american history", "world history"];
 
             //Get user input
             var userInputSubject = getValue(DOMstrings.subjectInput);
@@ -157,7 +158,6 @@ var UIController = (function(){
                 for(const cur of newDOMLines){
                     mainContainer.innerHTML += cur.UI;
                 }
-                console.log(newDOMLines);
                 
                 //Clear contents of form and refocus
                 UIController.formReset();
@@ -268,22 +268,19 @@ var UIController = (function(){
         },
         
         calcGPA: function(math, science, history){
-            //Make array from pass data
+            
             let arr = [math, science, history];
             let gpaPoints = [];
-
             //Slice % symbol off end of string and assign to gpa points
-            for(i=0; i<arr.length; i++){
-                if(arr[i] !== undefined){
-                    let x = arr[i].slice(0, -1);
-
-                    if(x >= 90){
+            for(const cur of arr){
+                if(cur !== undefined){
+                    if(cur >= 90){
                         gpaPoints.push(4);
-                    }else if(x >= 80 && x < 90){
+                    }else if(cur >= 80 && cur < 90){
                         gpaPoints.push(3);
-                    }else if(x >= 70 && x < 80){
+                    }else if(cur >= 70 && cur < 80){
                         gpaPoints.push(2);
-                    }else if(x >= 60 && x < 70){
+                    }else if(cur >= 60 && cur < 70){
                         gpaPoints.push(1);
                     }else{
                         gpaPoints.push(0);
@@ -292,10 +289,10 @@ var UIController = (function(){
             }
 
             //Calculate the average of the gpa points
-            let sum = 0;
-            for(i=0; i<gpaPoints.length; i++){
-                sum += gpaPoints[i];
-            }
+            const add = (a, b) => a + b;
+            const sum = gpaPoints.reduce(add, 0);
+
+            console.log(sum);
 
             let gpa = (sum / gpaPoints.length).toFixed(2);
             let DOMavg = getElement(DOMstrings.gpa);
