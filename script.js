@@ -115,6 +115,7 @@ var UIController = (function(){
                 }
 
                 //Get letter grade and if it's an "F" change color to red
+                var letterGrade;
                 if(userInputScore >= "90"){
                     letterGrade = "<td>A</td>";
                 }else if(userInputScore >= 80 && userInputAssignment < 90){
